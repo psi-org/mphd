@@ -1,0 +1,1343 @@
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"
+  integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.js"
+  integrity="sha512-cGr/NaKGtjxGJokVug48VTo4KNaVgqDxylS4lT5Wi39OFsqfv4J/eMZKOfrcwh/lAnOlK5/P7tEnRkdsbZrxUA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<style>
+  .ui-autocomplete-loading {
+    background: url("images/ui-anim_basic.gif") no-repeat right center !important;
+    background-color: #fff !important;
+  }
+
+  @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+  .button {
+    float: right;
+    min-width: 64px;
+    height: 48px;
+    min-height: 48px;
+    padding: 0 16px;
+    border-radius: 4px;
+    letter-spacing: 1pt;
+    background-color: #448aff;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+
+  .button .button__container {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+
+  .button .button__container .button-label {
+    display: table;
+    min-width: 64px;
+    font-size: 1em;
+    text-align: center;
+    font-style: normal;
+    line-height: 48px;
+    text-transform: uppercase;
+    color: #fff;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .int-grid {
+    width: auto;
+    height: auto;
+  }
+
+  .int-grid .income-grid_container {
+    display: grid;
+    grid-template-rows: 48px [Line1] 48px [Line2] auto [Line3] auto [Line4] auto [Line5] auto [Line6] auto [Line7] auto [Line8] auto [Line9] auto [Line10] auto [Line11] auto [Line12] auto [Line13] auto [Line14] auto [Line15] auto [Line16] auto [Line17] auto [Line18] auto [Line19] auto [Line20] auto [Line21] auto [Line22] auto [Line23] auto [Line24] auto [Line25] auto [Line26] auto [Line27] auto [Line28] auto [Line29] auto [Line30] auto [Line31] auto [Line32] auto [Line33] auto [Line34] auto [Line35] auto [Line36] auto [Line37] auto [Line38] auto [Line39] auto [Line40] auto [Line41] auto [Line42] auto [Line43] auto [Line44] auto [Line45] auto [Line46] auto [Line47] auto [Line48] auto [Line49] auto [Line50] auto [Line5] auto [Line52] auto [Line53] auto [Line54] auto [Line55] auto [Line56] auto [Line57] auto [Line58] auto [Line59] auto [Line60] auto [Line61] auto [Line62] auto [Line63] auto [Line64] auto [Line65] auto [Line66] auto [Line67] auto [Line68];
+    grid-template-columns: repeat(19, 1fr);
+    grid-gap: 0px;
+    min-width: 1024px;
+    margin-bottom: 21;
+  }
+
+  * {
+    font-family: "Rubik", sans-serif;
+    letter-spacing: 0.4px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+  }
+
+  [data-button] {
+    position: fixed;
+    top: 20px;
+    left: 16px;
+  }
+
+  .panel_options {
+    width: 100%;
+    min-height: 64px;
+    font-size: 11pt;
+    height: auto;
+    color: #fff;
+    padding: 21px 76px;
+    background-color: #000;
+  }
+
+  .panel_options div {
+    float: left;
+    width: auto;
+    padding: 0 4px;
+    height: 24px;
+  }
+
+  .blue {
+    background-color: #eaf2f5;
+  }
+
+  .green {
+    background-color: #e4ebdb;
+  }
+
+  .yellow {
+    background-color: #fbf4cc;
+  }
+
+  .gray {
+    background-color: #aaaaaa;
+  }
+
+  .orange {
+    background-color: #ecd1c6;
+  }
+
+  .skyBlue {
+    background-color: #d6dce4;
+  }
+</style>
+<script type="text/javascript">
+  const urbanRuralOUGroupSetId = "TZw6gtowjrX";
+  const facilityTypeGroupSetId = "G97myjB3jC5";
+  let facilityTypeOrgUnitGroups;
+  let urbanRuralOUGroups;
+
+  $(document).ready(function () {
+    initLevels();
+    setAutoCompleteForCountry();
+    facilityTypeOrgUnitGroups = getOrgnisationUnitGroupSet(facilityTypeGroupSetId);
+    urbanRuralOUGroups = getOrgnisationUnitGroupSet(urbanRuralOUGroupSetId);
+    $("#report").hide();
+    $("#export").hide();
+
+    $('input:radio[name="download"]').change(function () {
+      if ($(this).val() === "all") {
+        $("#changesSince").hide();
+      } else {
+        $("#changesSince").show();
+      }
+    });
+  });
+
+  function generate_report() {
+    let self = this;
+    self.orgUnit_url =
+      "../api/organisationUnits.json?fields=id,name,geometry,parent[id],created,lastUpdated,organisationUnitGroups[id,name]&filter=level:eq:{orgUnitLevel}&filter=ancestors.id:eq:{country}&paging=false{changeFilter}";
+    let changeFilter = "&filter=created:gt:{changesSince}";
+    self.orgUnits = [];
+    self.validation = {};
+    self.changesSince;
+
+    self.init = function () {
+      $("#report").hide();
+      $("#formLoadingDiv").css("display", "block");
+      self.clear();
+
+      self.countryId = $("#countryId").attr("ouId");
+      self.orgUnitLevel = $("#orgUnitLevel").val();
+      self.changesSince = $("#changesSince").val();
+
+      self.removePreviousValidation();
+      self.validate();
+      let downloads = $("input[type='radio'][name='download']:checked").val();
+                    changeFilter = (downloads === 'all') ? "" : changeFilter.replace("{changesSince}", self.changesSince);
+      if (self.validation.success && typeof self.validation.success !== "undefined") {
+        self.orgUnit_url = self.orgUnit_url
+          .replace("{country}", self.countryId)
+          .replace("{orgUnitLevel}", self.orgUnitLevel)
+          .replace("{changeFilter}", changeFilter);
+        if(downloads === "all") {
+          $("#changesSinceMarker").html(`Changes Since: All`);
+        } else {
+          $("#changesSinceMarker").html(`Changes Since: ${self.changesSince}`);
+        }
+        $("#generatedOnMarker").html(`Generated On: ${self.formatted_date()}`);    
+        self.generate_OrgUnits();
+      } else {
+        self.highlightMandatoryFields();
+      }
+    };
+
+    self.validate = function () {
+      let downloads = $("input[type='radio'][name='download']:checked").val();
+      let changeSinceValid = (downloads !== 'all') ? (self.changesSince !== "") ? true : false : true;
+      if(!(typeof self.countryId !== 'undefined' && self.orgUnitLevel !== "" && changeSinceValid))
+      {
+          
+          self.validation.success = false;
+          self.validation.countryId = (typeof self.countryId === 'undefined') ? false : true;
+          self.validation.orgUnitLevel = (self.orgUnitLevel === "") ? false: true;
+          self.validation.changesSince = changeSinceValid;
+
+      } else {
+          self.validation.success = true;
+      }
+    };
+
+    self.formatted_date = function()
+    {
+      var result="";
+      var d = new Date();
+      result += d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate() + 
+                " "+ d.getHours()+":"+d.getMinutes();
+      return result;
+    }
+
+    self.removePreviousValidation = function () {
+      if (typeof self.validation !== "undefined") {
+        Object.keys(self.validation).forEach((s) => {
+          $(`#${s}`).attr(
+            "style",
+            "border-radius: 0px; border: rgb(118, 118, 118), 2px solid;"
+          );
+        });
+      }
+    };
+
+    self.highlightMandatoryFields = function () {
+      if (!self.validation.success) {
+        Object.keys(self.validation).forEach((s) => {
+          if (!self.validation[s]) {
+            $(`#${s}`).attr(
+              "style",
+              "border-radius: 2px; border:#FF0000 2px solid;"
+            );
+          }
+        });
+      }
+    };
+
+    self.generate_OrgUnits = function () {
+      fetchData(self.orgUnit_url, function (data) {
+        data.organisationUnits.forEach((ou) => {
+          let orgUnitGroups = self.orgUnitInValidOrgUnitGroups(ou, facilityTypeOrgUnitGroups);
+          let urbanRuralGroup = self.orgUnitInValidOrgUnitGroups(ou, urbanRuralOUGroups);
+          if (orgUnitGroups.length > 0) {
+            let orgUnit = {};
+            orgUnit.siteChange =
+              ou.created != ou.lastUpdated ? "Updated" : "Add";
+            orgUnit.id = ou.id;
+            orgUnit.name = ou.name;
+            orgUnit.parentUId = ou.parent.id;
+            orgUnit.newName = ou.name;
+            if (
+              typeof ou.geometry !== "undefined" &&
+              ou.geometry.type === "Point"
+            ) {
+              orgUnit.lat = ou.geometry.coordinates[0];
+              orgUnit.longi = ou.geometry.coordinates[1];
+            }
+            orgUnit.ougName = Array.prototype.map.call(orgUnitGroups, function(grp) { return grp.name; }).join(", ");
+            orgUnit.ougId = Array.prototype.map.call(orgUnitGroups, function(grp) { return grp.id; }).join(", ");
+            orgUnit.urbanRural = Array.prototype.map.call(urbanRuralGroup, function(grp) { return grp.name; }).join(", ");
+            self.orgUnits.push(orgUnit);
+          }
+        });
+        self.populate_OrgUnits();
+      });
+    };
+
+    self.populate_OrgUnits = function () {
+      self.subHeader = $("#subHeader");
+      let newRow = "";
+      self.orgUnits.forEach((ou) => {
+        newRow += `
+                    <tr class="result-row">
+                      <td>${ou.siteChange}</td>
+                      <td>${ou.id}</td>
+                      <td>${ou.name}</td>
+                      <td>${ou.parentUId}</td>
+                      <td>${ou.newName}</td>
+                      <td>${typeof ou.lat !== 'undefined' ? ou.lat : ""}</td>
+                      <td>${typeof ou.longi !== 'undefined' ? ou.longi : ""}</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>"Type of Facility: "${ou.ougName}" <br/>UID: "${ou.ougId}</td>
+                      <td></td>
+                      <td></td>
+                      <td>${ou.ougName}</td>
+                      <td>${ou.urbanRural}</td>
+                    </tr>
+                  `;
+      });
+      self.subHeader.after(newRow);
+
+      $("#formLoadingDiv").css("display", "none");
+      $("#report").show();
+      $("#export").show();
+    };
+
+    self.orgUnitInValidOrgUnitGroups = function(ou, ouGroups) {
+      var orgUnitGroups = [];
+      ou.organisationUnitGroups.forEach((ouGroup) => {
+        if(ouGroups.includes(ouGroup.id))
+        {
+          orgUnitGroups.push(ouGroup);
+        }
+      });
+      return orgUnitGroups;
+    }
+
+    self.clear = function() {
+      $(".result-row").remove();
+    }
+    self.init();
+  }
+
+  function getOrgnisationUnitGroupSet(groupSetId) {
+    const orgUnitGroupSet =
+      `../api/organisationUnitGroupSets/${groupSetId}.json?fields=organisationUnitGroups[id]`;
+    let ouGroups = [];
+    fetchData(orgUnitGroupSet, function (data) {
+      data.organisationUnitGroups.forEach((ouGroup) => {
+        ouGroups.push(ouGroup.id);
+      });
+    });
+    return ouGroups;
+  }
+
+  function export_data() {
+    let self = this;
+    self.middleCenter = {
+      vertical: "middle",
+      horizontal: "center",
+    };
+
+    self.topLeft = { vertical: "top", horizontal: "left" };
+    self.borderStyle = {
+      top: { style: "thin" },
+      left: { style: "thin" },
+      bottom: { style: "thin" },
+      right: { style: "thin" },
+    };
+
+    self.workbook = new ExcelJS.Workbook();
+    self.workbook.creator = "Utsav Ashish Koju";
+    self.workbook.created = new Date();
+
+    self.so = self.workbook.addWorksheet(
+        "Site Change Operations",
+        {
+          views: [{ showGridLines: false }],
+        }
+      )
+
+      self.releaseNotes = self.workbook.addWorksheet("Release_Notes", {
+        views: [{ showGridLines: false }],
+      });
+
+      let FileName = `MPHD ${$("#countryId").val()} Org Unit Level ${$("#orgUnitLevel").val()}`;
+      let downloads = $("input[type='radio'][name='download']:checked").val();
+      if($("input[type='radio'][name='download']:checked").val() === 'all')
+      {
+        FileName += " All";
+      } else {
+        FileName += ` Changes Since: ${$("#changesSince").val()}`;
+      }
+
+    async function init() {
+      await self.generateReleaseNotes();
+      self.populateSiteData();
+      setTimeout(async function() {
+        const buf = await workbook.xlsx.writeBuffer();
+
+        saveAs(new Blob([buf]), `${FileName}.xlsx`);
+      }, 2000);
+    }
+
+    self.populateInstructionPage = function () {
+      self.instruction.properties.defaultColWidth = 60;
+      self.instruction.getCell("A1").value =
+        "Site Change Template for Momentum MKA XM Data Platform";
+      self.instruction.getCell("A1").font = {
+        name: "Arial",
+        size: 12,
+        bold: true,
+        color: { argb: "022e77" },
+      };
+      self.instruction.mergeCells("A1:B1");
+      self.instruction.getCell("A1").alignment = middleCenter;
+
+      self.instruction.getCell("A2").value = "Requested By";
+      self.instruction.getCell("A2").font = {
+        name: "Arial",
+        size: 12,
+        bold: true,
+      };
+      self.instruction.getCell("A2").fill = self.cellsSolidBackground("d3d3d3");
+      self.instruction.getCell("B2").fill = self.cellsSolidBackground("d0d9ee");
+
+      self.instruction.getCell("A3").value = "Momentum Award";
+      self.instruction.getCell("A3").font = {
+        name: "Arial",
+        size: 12,
+        bold: true,
+      };
+      self.instruction.getCell("A3").fill = self.cellsSolidBackground("d3d3d3");
+      self.instruction.getCell("B3").fill = self.cellsSolidBackground("d0d9ee");
+
+      self.instruction.getCell("A4").value = "Section 1: Instructions";
+      self.instruction.getCell("A4").font = {
+        name: "Arial",
+        size: 14,
+        bold: true,
+      };
+      self.instruction.getCell("A4").fill = self.cellsSolidBackground("e1e0e0");
+
+      self.instruction.getCell("A5").value =
+        "Please fill out the yellow cells to indicate the site details, site change and merge operations you wish to include in the merge as described in Section 4.";
+      self.instruction.getCell("A5").font = { name: "Calibri", size: 11 };
+      self.instruction.mergeCells("A5:E10");
+      self.instruction.getCell("A5").alignment = topLeft;
+
+      self.instruction.getCell("A11").value = "Section 2: Constraints";
+      self.instruction.getCell("A11").font = {
+        name: "Arial",
+        size: 14,
+        bold: true,
+      };
+
+      self.instruction.getCell("A12").value =
+        "1 - The selected merge operation will apply for all data value merge operations between the two sites. Varying the merge operation from record to record between two sites is not supported.";
+      self.instruction.getCell("A12").font = { name: "Calibri", size: 11 };
+
+      self.instruction.getCell("A13").value =
+        "2 - Non-Numeric fields (ex. Narratives) must always have the LAST operation applied during a merge (ex. narratives)";
+      self.instruction.getCell("A13").font = { name: "Calibri", size: 11 };
+
+      self.instruction.getCell("A14").value =
+        "3 - Data must be in same reporting period";
+      self.instruction.getCell("A14").font = { name: "Calibri", size: 11 };
+
+      self.instruction.getCell("A15").value =
+        "4 - Sites involved in merge must all hold same classification (eg. Facility, district, etc)";
+      self.instruction.getCell("A15").font = { name: "Calibri", size: 11 };
+
+      self.instruction.getCell("A17").value =
+        "Section 3: Hints for filling the template";
+      self.instruction.getCell("A17").font = {
+        name: "Arial",
+        size: 14,
+        bold: true,
+      };
+
+      self.instruction.getCell("A18").value =
+        "Follow Steps 1-14 for merge site operation";
+      self.instruction.getCell("A18").font = {
+        name: "Calibri",
+        size: 11,
+        color: { argb: "fb0006" },
+      };
+
+      self.instruction.getCell("A19").value =
+        "Follow Steps 1-3 for delete site operation";
+      self.instruction.getCell("A19").font = {
+        name: "Calibri",
+        size: 11,
+        color: { argb: "fb0006" },
+      };
+
+      self.instruction.getCell("A20").value =
+        "Follow Steps 1-9 for update site operation";
+      self.instruction.getCell("A20").font = {
+        name: "Calibri",
+        size: 11,
+        color: { argb: "fb0006" },
+      };
+
+      self.instruction.getCell("A21").value =
+        "Follow Steps 1-9 for add site operation";
+      self.instruction.getCell("A21").font = {
+        name: "Calibri",
+        size: 11,
+        color: { argb: "fb0006" },
+      };
+
+      self.instruction.getCell("A22").value =
+        "Section 4: Steps to fill the template (* = Mandatory field)";
+      self.instruction.getCell("A22").font = {
+        name: "Arial",
+        size: 14,
+        bold: true,
+      };
+
+      self.instruction.getCell("A23").value =
+        "You must fill all changes in one template";
+      self.instruction.getCell("A23").font = {
+        name: "Calibri",
+        size: 11,
+        color: { argb: "fb0006" },
+      };
+
+      self.instruction.getCell(
+        "A25"
+      ).value = `Step 1. Fill in site change_operation by choosing a value from the Site Operation Key below`;
+      self.instruction.getCell("A25").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A25").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A25:E25");
+
+      self.instruction.getCell("A26").value = `Site Operation Key`;
+      self.instruction.getCell("A26").font = {
+        name: "Calibri",
+        size: 11,
+        bold: true,
+      };
+      self.instruction.getCell("A26").fill =
+        self.cellsSolidBackground("e1e0e0");
+      self.instruction.mergeCells("A26:E26");
+
+      self.instruction.getCell("A27").value =
+        "Site Operation (one for entire row)";
+      self.instruction.getCell("A27").font = {
+        name: "April",
+        size: 11,
+        bold: true,
+      };
+      self.instruction.getCell("A27").fill =
+        self.cellsSolidBackground("b1b2b1");
+      self.instruction.getCell("B27").value = "Description";
+      self.instruction.getCell("B27").font = {
+        name: "April",
+        size: 11,
+        bold: true,
+      };
+      self.instruction.getCell("B27").fill =
+        self.cellsSolidBackground("b1b2b1");
+
+      self.instruction.getCell("A28").value = "ADD";
+      self.instruction.getCell("A28").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("B28").value = "Add site";
+      self.instruction.getCell("B28").font = { name: "Calibri", size: 11 };
+
+      self.instruction.getCell("A29").value = "DELETE";
+      self.instruction.getCell("A29").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("B29").value = "Delete Site";
+      self.instruction.getCell("B29").font = { name: "Calibri", size: 11 };
+
+      self.instruction.getCell("A30").value = "MERGE";
+      self.instruction.getCell("A30").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("B30").value =
+        "Merge site to another site either in the same parent or different parent";
+      self.instruction.getCell("B30").font = { name: "Calibri", size: 11 };
+
+      self.instruction.getCell("A31").value = "UPDATE";
+      self.instruction.getCell("A31").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("B31").value =
+        "1) Update site code, coordinates (latitude, longitude); 2) Rename site details e.g  site name, site code; 3) Relocate site to another parent";
+      self.instruction.getCell("B31").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("B31").alignment = { wrapText: true };
+      self.applyBorderToRange(self.instruction, 0, 27, 1, 31);
+
+      self.instruction.getCell(
+        "A33"
+      ).value = `Step 2. Fill in Site  UID. This is the uid from  to which you want to perform a site change. This is mandatory for all site changes`;
+      self.instruction.getCell("A33").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A33").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A33:E33");
+
+      self.instruction.getCell(
+        "A34"
+      ).value = `Step 3. Fill in Site  Name. This is the name from  to which you want to perform a site change. This is mandatory for all site changes`;
+      self.instruction.getCell("A34").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A34").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A34:E34");
+
+      self.instruction.getCell(
+        "A35"
+      ).value = `Step 4. Fill in Site Parent  UID. This is the parent uid of the site to which the donor site will be relocated or updated or merged or added which you want to perform a site change. This is optional for all site changes except ADD and UPDATE( for relocating a site, Site Parent  UID is the new parent)`;
+      self.instruction.getCell("A35").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A35").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A35:E35");
+      self.instruction.getCell("A35").alignment = { wrapText: true };
+
+      self.instruction.getCell(
+        "A36"
+      ).value = `Step 5. Fill in Site New  Name. This is the new site name for the current site. This is mandatory if the site change is UPDATE (updating name only)`;
+      self.instruction.getCell("A36").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A36").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A36:E36");
+
+      self.instruction.getCell(
+        "A37"
+      ).value = `Step 6. Fill in Site Latitude. This is the new latitude for the current site.This is mandatory if the site change is UPDATE (updating coordinates only)				`;
+      self.instruction.getCell("A37").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A37").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A37:E37");
+
+      self.instruction.getCell(
+        "A38"
+      ).value = `Step 7. Fill in Site Longitude. This is the new longitude for the current site.This is mandatory if the site change is UPDATE (updating coordinates only)				`;
+      self.instruction.getCell("A38").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A38").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A38:E38");
+
+      self.instruction.getCell(
+        "A39"
+      ).value = `Step 8. Complete Step 9-12 only if are merging sites.	`;
+      self.instruction.getCell("A39").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A39").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A39:E39");
+
+      self.instruction.getCell(
+        "A40"
+      ).value = `Step 9. Fill in Donor Site  UID. This is the uid from  from which you want to perform a site merge operation. This is mandatory if the site change is MERGE				`;
+      self.instruction.getCell("A40").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A40").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A40:E40");
+
+      self.instruction.getCell(
+        "A41"
+      ).value = `Step 10. Fill in Donor Site  Name. This is the name from  from which you want to perform a site merge operation. This is mandatory if the site change is MERGE				`;
+      self.instruction.getCell("A41").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A41").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A41:E41");
+
+      self.instruction.getCell(
+        "A42"
+      ).value = `Step 11. Fill in Donor Site Parent  UID. This is the parent uid from  of the site from which you want to perform a site change merge operation. This is optional for all site changes				`;
+      self.instruction.getCell("A42").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A42").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A42:E42");
+
+      self.instruction.getCell(
+        "A43"
+      ).value = `Step 12. Fill in Merge Operation by choosing a value from the Merge Key below	`;
+      self.instruction.getCell("A43").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A43").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A43:E43");
+
+      self.instruction.getCell("A44").value = `Merge Key`;
+      self.instruction.getCell("A44").font = {
+        name: "Calibri",
+        size: 11,
+        bold: true,
+      };
+      self.instruction.getCell("A44").fill =
+        self.cellsSolidBackground("e1e0e0");
+      self.instruction.mergeCells("A44:E44");
+
+      self.instruction.getCell("A45").value =
+        "Merge Operation (one for entire row)";
+      self.instruction.getCell("A45").font = {
+        name: "April",
+        size: 11,
+        bold: true,
+      };
+      self.instruction.getCell("A45").fill =
+        self.cellsSolidBackground("b1b2b1");
+      self.instruction.getCell("B45").value = "Description";
+      self.instruction.getCell("B45").font = {
+        name: "April",
+        size: 11,
+        bold: true,
+      };
+      self.instruction.getCell("B45").fill =
+        self.cellsSolidBackground("b1b2b1");
+
+      self.instruction.getCell("A46").value = "LAST";
+      self.instruction.getCell("A46").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("B46").value =
+        "Most recent records are retained";
+      self.instruction.getCell("B46").font = { name: "Calibri", size: 11 };
+
+      self.instruction.getCell("A47").value = "FIRST";
+      self.instruction.getCell("A47").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("B47").value = "Oldest records are retained";
+      self.instruction.getCell("B47").font = { name: "Calibri", size: 11 };
+
+      self.instruction.getCell("A48").value = "MAX";
+      self.instruction.getCell("A48").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("B48").value = "Largest values are retained";
+      self.instruction.getCell("B48").font = { name: "Calibri", size: 11 };
+
+      self.instruction.getCell("A49").value = "MINIMUM";
+      self.instruction.getCell("A49").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("B49").value = "Smallest values are retained";
+      self.instruction.getCell("B49").font = { name: "Calibri", size: 11 };
+
+      self.instruction.getCell("A50").value = "SUM";
+      self.instruction.getCell("A50").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("B50").value =
+        "Values from each site's record is summed and retained.";
+      self.instruction.getCell("B50").font = { name: "Calibri", size: 11 };
+
+      self.applyBorderToRange(self.instruction, 0, 45, 1, 50);
+
+      self.instruction.getCell(
+        "A52"
+      ).value = `Step 14. Fill in Delete donor site after merge operation? (Yes/No). Tell us if site should be deleted after merge site change. Note that the donor site will automatically be deleted after doing the merge site change.This is mandatory for MERGE site change				`;
+      self.instruction.getCell("A52").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A52").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A52:E52");
+      self.instruction.getCell("A52").alignment = { wrapText: true };
+
+      self.instruction.getCell(
+        "A53"
+      ).value = `Step 15. Fill in comments. This is any additional information which may be revelant to performing the site change. This shall be used by both MKA Core Team and Requestor to provide feedback during requirement confirmation. This is optional for all site changes				`;
+      self.instruction.getCell("A53").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A53").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A53:E53");
+      self.instruction.getCell("A53").alignment = { wrapText: true };
+
+      self.instruction.getCell("A55").value =
+        "Section 5: Steps to validate the template (For Only MKA Core Team)				";
+      self.instruction.getCell("A55").font = {
+        name: "Arial",
+        size: 14,
+        bold: true,
+      };
+
+      self.instruction.getCell(
+        "A56"
+      ).value = `Step 1. Extract the donor and receptor sites, check if any of the donor sites appear in receptor sites or is duplicated in the template				`;
+      self.instruction.getCell("A56").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A56").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A56:E56");
+      self.instruction.getCell("A56").alignment = { wrapText: true };
+
+      self.instruction.getCell(
+        "A57"
+      ).value = `Step 2. Validate extracted the donor and receptor sites on triage to identify if donor sites are newer than receptors				`;
+      self.instruction.getCell("A57").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A57").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A57:E57");
+      self.instruction.getCell("A57").alignment = { wrapText: true };
+
+      self.instruction.getCell(
+        "A58"
+      ).value = `Step 3. Fill in the details of the validation in the columns "For use by MKA Core Team only", you can add additional columns for more validation findings e.g duplicated,etc					`;
+      self.instruction.getCell("A58").font = { name: "Calibri", size: 11 };
+      self.instruction.getCell("A58").fill =
+        self.cellsSolidBackground("d5e6f5");
+      self.instruction.mergeCells("A58:E58");
+      self.instruction.getCell("A58").alignment = { wrapText: true };
+    };
+
+    self.populateSiteData = function () {
+      self.so.columns = [
+        { header: "Site Change", key: "site_change", width: 20 },
+        { header: "Site UID", key: "site_uid", width: 20 },
+        { header: "Site Name", key: "site_name", width: 20 },
+        { header: "Site Parent UID", key: "parent_uid", width: 20 },
+        { header: "Site New Name ", key: "site_new_name", width: 20 },
+        { header: "Site Latitude", key: "site_latitude", width: 20 },
+        { header: "Site Longitude", key: "site_longitude", width: 20 },
+        { header: "Donor Site UID", key: "donor_site_uid", width: 20 },
+        { header: "Donor Site Name", key: "donor_site_name", width: 20 },
+        {
+          header: "Donor Site Parent UID",
+          key: "donor_site_parent_uid",
+          width: 20,
+        },
+        { header: "Merge Operation", key: "merge_operation", width: 20 },
+        {
+          header: "Delete donor site after merge operation? (Yes/No)",
+          key: "delete_donor",
+          width: 20,
+        },
+        { header: "Comments", key: "comments", width: 50 },
+        {
+          header: "Donor Total data points (For Helpdesk)",
+          key: "donor_total_data",
+          width: 20,
+        },
+        {
+          header: "Donor Current Quarter MER data points (For Helpdesk)",
+          key: "donor_current_quarter_mer",
+          width: 20,
+        },
+        {
+          header: `SPD Type Group (specify one of the following): \n Hospital - public \n Hospital - Private / NGO / FBO \n Health Center / Facility - public \n Health Center / Facility - private / NGO/ FBO \n Community (Health Worker) \n Mobile Clinic / services - public \n Mobile clinic / outreach - private pharmacy`,
+          key: "spd_type_group",
+          width: 20
+        },
+        {
+          header: "Urban / Rural Group (Specify 'Urban' or 'Rural' for each facility)",
+          key: "urban_rural_group",
+          width: 20
+        },
+      ];
+
+      self.so.duplicateRow(1, 2, false);
+
+      for (let i = 1; i < 3; i++) {
+        self.so.getRow(i).values = [];
+      }
+
+      self.so.getCell("A1").fill = self.cellsSolidBackground("d5e6f5");
+
+      self.so.getCell("B1").value =
+        "Receptor Site Information (* = Mandatory field)";
+      self.so.getCell("B1").font = { name: "Calibri", size: 11, bold: true };
+      self.so.mergeCells("B1:G1");
+      self.so.getCell("B1").alignment = self.middleCenter;
+      self.so.getCell("B1").fill = self.cellsSolidBackground("dbecd2");
+
+      self.so.getCell("H1").value =
+        "Donor Site Information (* = Mandatory field) [Complete these sections only if you are merging sites.]";
+      self.so.getCell("H1").font = { name: "Calibri", size: 11, bold: true };
+      self.so.mergeCells("H1:M1");
+      self.so.getCell("H1").alignment = self.middleCenter;
+      self.so.getCell("H1").fill = self.cellsSolidBackground("faddcd");
+
+      self.so.getCell("N1").value = "For use by Helpdesk only	";
+      self.so.getCell("N1").font = { name: "Calibri", size: 11, bold: true };
+      self.so.mergeCells("N1:O1");
+      self.so.getCell("N1").alignment = self.middleCenter;
+      self.so.getCell("N1").fill = self.cellsSolidBackground("efefef");
+
+      self.so.getCell("P1").value = "Org Unit Groups";
+      self.so.getCell("P1").font = { name: "Calibri", size: 11, bold: true };
+      self.so.mergeCells("P1:Q1");
+      self.so.getCell("P1").alignment = self.middleCenter;
+      self.so.getCell("P1").fill = self.cellsSolidBackground("d6dce4");
+
+      self.so.getRow(2).height = 90;
+      self.so.getRow(3).height = 50;
+      self.so.getRow(3).alignment = self.middleCenter;
+      self.so.getCell("A2").value =
+        "Operation: \r\n- Add* \r\n- Delete* \r\n- Merge* \r\n- Update*";
+      self.so.getCell("A2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("A2").fill = self.cellsSolidBackground("d5e6f5");
+      self.so.getCell("A2").alignment = { wrapText: true };
+
+      self.so.getCell("B2").value =
+        "Operation: \r\n- Add* \r\n- Delete* \r\n- Merge* \r\n- Update*";
+      self.so.getCell("B2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("B2").fill = self.cellsSolidBackground("dbecd2");
+      self.so.getCell("B2").alignment = { wrapText: true };
+
+      self.so.getCell("C2").value =
+        "Operation: \r\n- Add* \r\n- Delete* \r\n- Merge* \r\n- Update*";
+      self.so.getCell("C2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("C2").fill = self.cellsSolidBackground("dbecd2");
+      self.so.getCell("C2").alignment = { wrapText: true };
+
+      self.so.getCell("D2").value =
+        "Operation: \r\n- Merge* \r\n- Update* (*Relocate only)";
+      self.so.getCell("D2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("D2").fill = self.cellsSolidBackground("dbecd2");
+      self.so.getCell("D2").alignment = { wrapText: true };
+
+      self.so.getCell("E2").value =
+        "Operation: \r\n- Merge* \r\n- Update(*Rename only";
+      self.so.getCell("E2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("E2").fill = self.cellsSolidBackground("dbecd2");
+      self.so.getCell("E2").alignment = { wrapText: true };
+
+      self.so.getCell("F2").value =
+        "Operation: \r\n- Add* \r\n- Merge* \r\n- Update(*geocoordinates only)";
+      self.so.getCell("F2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("F2").fill = self.cellsSolidBackground("dbecd2");
+      self.so.getCell("F2").alignment = { wrapText: true };
+
+      self.so.getCell("G2").value =
+        "Operation: \r\n- Add* \r\n- Merge* \r\n- Update(*geocoordinates only)";
+      self.so.getCell("G2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("G2").fill = self.cellsSolidBackground("dbecd2");
+      self.so.getCell("G2").alignment = { wrapText: true };
+
+      self.so.getCell("H2").value = "Operation: \r\n- Merge*";
+      self.so.getCell("H2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("H2").fill = self.cellsSolidBackground("faddcd");
+      self.so.getCell("H2").alignment = { wrapText: true };
+
+      self.so.getCell("I2").value = "Operation: \r\n- Merge*";
+      self.so.getCell("I2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("I2").fill = self.cellsSolidBackground("faddcd");
+      self.so.getCell("I2").alignment = { wrapText: true };
+
+      self.so.getCell("J2").value = "Operation: \r\n- Merge*";
+      self.so.getCell("J2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("J2").fill = self.cellsSolidBackground("faddcd");
+      self.so.getCell("J2").alignment = { wrapText: true };
+
+      self.so.getCell("K2").value = "Operation: \r\n- Merge*";
+      self.so.getCell("K2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("K2").fill = self.cellsSolidBackground("faddcd");
+      self.so.getCell("K2").alignment = { wrapText: true };
+
+      self.so.getCell("L2").value = "Operation: \r\n- Merge*";
+      self.so.getCell("L2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("L2").fill = self.cellsSolidBackground("faddcd");
+      self.so.getCell("L2").alignment = { wrapText: true };
+
+      self.so.getCell("M2").value =
+        "Operation: \r\n- Add* \r\n- Delete* \r\n- Merge* \r\n- Update*";
+      self.so.getCell("M2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("M2").fill = self.cellsSolidBackground("fff0c1");
+      self.so.getCell("M2").alignment = { wrapText: true };
+
+      self.so.getCell("N2").value = "n/a";
+      self.so.getCell("N2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("N2").fill = self.cellsSolidBackground("efefef");
+      self.so.getCell("N2").alignment = { wrapText: true };
+
+      self.so.getCell("O2").value = "n/a";
+      self.so.getCell("O2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("O2").fill = self.cellsSolidBackground("efefef");
+      self.so.getCell("O2").alignment = { wrapText: true };
+
+      self.so.getCell("P2").value = "Operation: Add to specified org unit group";
+      self.so.getCell("P2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("P2").fill = self.cellsSolidBackground("d6dce4");
+      self.so.getCell("P2").alignment = { wrapText: true };
+
+      self.so.getCell("Q2").value = "Operation: Add to specified org unit group";
+      self.so.getCell("Q2").font = { name: "Calibri", size: 11, bold: true };
+      self.so.getCell("Q2").fill = self.cellsSolidBackground("d6dce4");
+      self.so.getCell("Q2").alignment = { wrapText: true };
+
+      self.so.getCell("A3").fill = self.cellsSolidBackground("d5e6f5");
+      self.applyFillToRange(self.so, 1, 3, 6, 3, "dbecd2");
+      self.applyFillToRange(self.so, 7, 3, 11, 3, "faddcd");
+      self.so.getCell("M3").fill = self.cellsSolidBackground("fff0c1");
+      self.applyFillToRange(self.so, 13, 3, 14, 3, "efefef");
+      self.so.getCell("N3").alignment = { wrapText: true };
+      self.so.getCell("O3").alignment = { wrapText: true };
+
+      self.copyTableContent();
+
+      self.applyBorderToRange(self.so, 0, 1, 16, self.so.lastRow._number);
+    };
+
+    self.copyTableContent = function () {
+      let table = document.getElementById("report").rows;
+      for (i = 3; i < table.length; i++) {
+        let row = i + 1;
+        let tableRow = table[i].children;
+        let tempData = {
+          site_change: "",
+          site_uid: "",
+          site_name: "",
+          parent_uid: "",
+          site_new_name: "",
+          site_latitude: "",
+          site_longitude: "",
+          donor_site_uid: "",
+          donor_site_name: "",
+          donor_site_parent_uid: "",
+          merge_operation: "",
+          delete_donor: "",
+          comments: "",
+          donor_total_data: "",
+          donor_current_quarter_mer: "",
+          spd_type_group: "",
+          urban_rural_group: ""
+        };
+
+        let rowData = self.so.getRow(row);
+        let tableRowDataSize = tableRow.length;
+
+        let index = 0;
+
+        Object.keys(tempData).forEach((key) => {
+          if (typeof tableRow[index] !== "undefined") {
+            let temp = parseFloat(tableRow[index].innerText);
+            if (isNaN(temp)) {
+              tempData[key] = tableRow[index].innerText;
+            } else {
+              tempData[key] = parseFloat(
+                tableRow[index].innerText.replace(/,/g, "")
+              );
+            }
+            index++;
+          }
+        });
+        rowData.values = tempData;
+        rowData.height = 20;
+      }
+
+      let lastRow = self.so.lastRow._number
+
+      self.so.mergeCells(`A${lastRow-1}:O${lastRow-1}`);
+      self.so.mergeCells(`A${lastRow}:O${lastRow}`);
+      
+      self.so.getColumn("site_latitude").numFmt = self.numFmtStr;
+      self.so.getColumn("site_longitude").numFmt = self.numFmtStr;
+    };
+
+    self.generateReleaseNotes = function() {
+      self.releaseNotes.columns = [
+        { header: "Version", key: "version", width: 15 },
+        { header: "Date", key: "date", width: 12 },
+        { header: "New Features / Bug Fixes", key: "description", width: 100 }
+      ];
+
+      self.releaseNotes.duplicateRow(1, 1, false);
+
+      for (let i = 1; i < 2; i++) {
+        self.releaseNotes.getRow(i).values = [];
+      }
+      
+      self.releaseNotes.getCell("A1").value = "Release Notes";
+      self.releaseNotes.mergeCells("A1:C1");
+      let row = 2;
+      fetchData("../api/documents/bqjvATIqW0g/data", function(data) {
+        let changes = data.mphd_orgUnit_template;
+        for(i = 0; i<=changes.length; i++) {
+          row = row + 1;
+          let rowVal = self.releaseNotes.getRow(row);
+          rowVal.values = changes[i];
+        }
+        self.releaseNotes.getColumn('version').alignment = {vertical: "middle"};
+        self.releaseNotes.getColumn('date').alignment = {vertical: "middle"};
+        self.releaseNotes.getColumn('description').alignment = { wrapText: true };
+        self.applyBorderToRange(self.releaseNotes, 0, 2, 2, parseInt(self.releaseNotes.lastRow._number)-1);
+      })
+    }
+
+
+    self.cellsSolidBackground = function (color) {
+      return {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: color },
+      };
+    };
+
+    self.applyBorderToRange = function (
+      sheet,
+      startCol,
+      startRow,
+      endCol,
+      endRow
+    ) {
+      for (i = startRow; i <= endRow; i++) {
+        for (j = startCol; j <= endCol; j++) {
+          const colChar = String.fromCharCode(65 + parseInt(j));
+          const cellAxis = colChar + i.toString();
+          sheet.getCell(cellAxis).border = self.borderStyle;
+        }
+      }
+    };
+
+    self.applyFillToRange = function (
+      sheet,
+      startCol,
+      startRow,
+      endCol,
+      endRow,
+      color
+    ) {
+      for (i = startRow; i <= endRow; i++) {
+        for (j = startCol; j <= endCol; j++) {
+          const colChar = String.fromCharCode(65 + parseInt(j));
+          const cellAxis = colChar + i.toString();
+          sheet.getCell(cellAxis).fill = self.cellsSolidBackground(color);
+        }
+      }
+    };
+
+    init();
+  }
+
+  function fetchData(url, returnFunc) {
+    fetch(url, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        return returnFunc(data);
+      });
+  }
+
+  retrieveData = (
+    url,
+    actionSuccess,
+    actionError,
+    loadingStart,
+    loadingEnd
+  ) => {
+    return $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: url,
+      async: true,
+      success: actionSuccess,
+      error: actionError,
+      beforeSend: function (xhr) {
+        if (loadingStart !== undefined) loadingStart();
+      },
+    }).always(function (data) {
+      if (loadingEnd !== undefined) loadingEnd();
+    });
+  };
+
+  const initLevels = () => {
+    for (level = 4; level <= 9; level++) {
+      $("#orgUnitLevel").append(
+        "<option value='" + level + "'> L" + level + "</option>"
+      );
+    }
+  };
+
+  setAutoCompleteForCountry = () => {
+    const ORGUNIT_QUERY_URL =
+      "../api/organisationUnits.json?level=3&fields=name,id&paging=false&filter=name:ilike:";
+    $("#countryId").autocomplete({
+      source: function (request, response) {
+        var searchKey = $("#countryId").val();
+        retrieveData(ORGUNIT_QUERY_URL + searchKey, function (data) {
+          var ouList = $.map(data.organisationUnits, function (item) {
+            return {
+              label: item.name,
+              value: item.name,
+              id: item.id,
+            };
+          });
+
+          response(ouList);
+        });
+      },
+      minLength: 2,
+      select: function (event, ui) {
+        $("#countryId").attr("ouId", ui.item.id);
+        $("#countryId").autocomplete("close");
+      },
+      change: function (event, ui) {
+        if (ui.item == null) {
+          $(this).val("");
+          $(this).focus();
+        }
+      },
+    });
+  };
+</script>
+<div>
+  <div>
+    <div class="panel_options">
+      <div>
+        <label htmlFor="country">Country</label>:
+        <input
+          name="country"
+          id="countryId"
+          placeholder="Enter to search"
+          keyword-placeholder="opt_c:commons_terms_msg_EnterToSearch"
+        />
+      </div>
+      <div>
+        <label htmlFor="orgUnitLevel">Organisation Unit Level</label>:
+        <select name="orgUnitLevel" id="orgUnitLevel">
+          <option value="">[Please select]</option>
+        </select>
+      </div>
+      <div>
+          Download: 
+          <label class="container">All
+            <input type="radio" name="download" value="all">
+            <span class="checkmark"></span>
+          </label>
+          <label class="container"> | Change Since:
+            <input type="radio" checked="checked" name="download" value="change_since">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div>
+            <input type="date" id="changesSince" name="changesSince" placeholder="Select Date"/>
+        </div>
+      <button onClick="generate_report()">Generate</button>
+      <button id="export" onClick="export_data()">Export</button>
+    </div>
+    <div
+      id="formLoadingDiv"
+      class="loaderDiv"
+      style="
+        display: none;
+        margin-top: 100px;
+        text-align: center;
+        font-style: italic;
+        font-size: 12px;
+      "
+    >
+      <br /><br /><br />
+      <img src="../images/ajax-loader-circle.gif" />
+      <br /><br /><br />
+      <p>
+        <span keyword="opt_c:htmlReport_msg_SettingUpReport"
+          >Setting up the report</span
+        >...
+      </p>
+    </div>
+
+    <table
+      id="report"
+      border="1px"
+      style="
+        border-spacing: 0;
+        line-height: 16px;
+        vertical-align: middle;
+        margin: 10px;
+        font-size: 9pt !important;
+      "
+    >
+      <tr>
+        <td class="blue"></td>
+        <td colspan="6" class="green">
+          Receptor Site Information (* = Mandatory field)
+        </td>
+        <td colspan="6" class="orange">
+          Donor Site Information (* = Mandatory field) [Complete these sections
+          only if you are merging sites.]
+        </td>
+        <td colspan="2" class="gray">For use by Helpdesk only</td>
+        <td colspan="2" class="skyBlue">Org Unit Groups</td>
+      </tr>
+      <tr>
+        <td class="blue">
+          "Operation:
+          <br />- Add* <br />- Delete* <br />- Merge* <br />- Update*"
+        </td>
+        <td class="green">
+          "Operation:
+          <br />- Add* <br />- Delete* <br />- Merge* <br />- Update*"
+        </td>
+        <td class="green">
+          "Operation:
+          <br />- Add* <br />- Delete* <br />- Merge* <br />- Update*"
+        </td>
+        <td class="green">
+          "Operation:
+          <br />- Add* <br />- Merge* <br />- Update*" (*Relocate only)
+        </td>
+        <td class="green">
+          "Operation:
+          <br />- Merge* <br />- Update*" (*Rename only)
+        </td>
+        <td class="green">
+          "Operation:
+          <br />- Add* <br />- Merge* <br />- Update*" (*geocoordinates only)
+        </td>
+        <td class="green">
+          "Operation:
+          <br />- Add* <br />- Merge* <br />- Update*" (*geocoordinates only)
+        </td>
+        <td class="orange">
+          "Operation:
+          <br />- Merge*"
+        </td>
+        <td class="orange">
+          "Operation:
+          <br />- Merge*"
+        </td>
+        <td class="orange">
+          "Operation:
+          <br />- Merge*"
+        </td>
+        <td class="orange">
+          "Operation:
+          <br />- Merge*"
+        </td>
+        <td class="orange">
+          "Operation:
+          <br />- Merge*"
+        </td>
+        <td class="yellow">
+          Operation:
+          <br />- Add <br />- Delete <br />- Merge <br />- Update
+        </td>
+        <td class="gray">n/a</td>
+        <td class="gray">n/a</td>
+        <td class="skyBlue">Operation: Add to specified org unit group</td>
+        <td class="skyBlue">Operation: Add to specified org unit group</td>
+      </tr>
+      <tr style="text-align: center" id="subHeader">
+        <td class="blue">Site Change</td>
+        <td class="green">Site UID</td>
+        <td class="green">Site Name</td>
+        <td class="green">Site Parent UID</td>
+        <td class="green">Site New Name</td>
+        <td class="green">Site Latitude</td>
+        <td class="green">Site Longitude</td>
+        <td class="orange">Donor Site UID</td>
+        <td class="orange">Donor Site Name</td>
+        <td class="orange">Donor Site Parent UID</td>
+        <td class="orange">Merge Operation</td>
+        <td class="orange">
+          Delete donor site after merge operation? (Yes/No)
+        </td>
+        <td class="yellow">Comments</td>
+        <td class="gray">donor total data points (For Helpdesk)</td>
+        <td class="gray">
+          donor current quarter MER data points (For Helpdesk)
+        </td>
+        <td class="skyBlue">SDP Type Group (specify one of the following)
+          <br/>Hospital - public
+          <br/>Hospital - Private / NGO / FBO
+          <br/>Health Center / facility - public
+          <br/>Health Center / facility - private/NGO/FBO
+          <br/>Community (health worker)
+          <br/>Mobile clinic / services - public
+          <br/>Mobile clinic / outreach - private
+          <br/>pharmacy
+        </td>
+        <td class="skyBlue">Urban / Rural Group<br/>(Specify "Urban" or "Rural" for each facility)</td>
+      </tr>
+      <tr>
+        <td colspan="17" id="changesSinceMarker">Change Since: </td>
+      </tr>
+      <tr>
+        <td colspan="17" id="generatedOnMarker">Generated On: </td>
+      </tr>
+    </table>
+  </div>
+</div>
