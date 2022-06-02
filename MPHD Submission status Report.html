@@ -1,0 +1,1243 @@
+<style>
+
+.header_page img
+{
+	float: left;
+    width: 200px;
+}
+.header_page .param-title-pgsInd {
+	float: left;
+    height: auto;
+	color: #000;
+    margin-left: 10px;
+}
+
+
+.param-area {
+	min-height: 72px;
+    box-sizing: border-box;
+    margin: 10px;
+}
+
+.content-area {
+	margin: 10px;
+}
+.param-area .param-area_ptrs {
+    float: left;
+    padding: 0 8px 0 0;
+    box-sizing: border-box;
+	width: 100%;
+	border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    padding: 20px 20px 0px 20px;
+    background-color: #d6e5ff;
+	color: #000;
+}
+
+
+.param-area .param-area_ptrs label {
+	font-weight: bold;
+}
+
+.field {
+    float: left;
+    width: 100%;
+    height: auto;
+    min-height: 48px;
+    margin: 0px 0px 20px 0px;
+    text-align: left;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.field .field__label {
+    padding: 2px 8px 4px 2px;
+}
+
+.field .field__label label {
+    line-height: auto;
+}
+
+.field .field__selector {
+    width: calc(100% - 6px);
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+input:not([type=checkbox]):not([type=radio]), select {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #AAAAAA;
+    background-color: #d6e5ff;
+    color: #000;
+}
+
+.button {
+    align-items: center;
+    justify-content: center;
+    float: right;
+    min-width: 90px;
+    height: 36px;
+    color: #f3f3f3;
+    line-height: 36px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background-color: #1A5276;
+    border-radius: 0 20px;
+    cursor: pointer;
+    box-shadow: 4px 4px 4px 0 rgb(0 0 0 / 31%);
+    text-transform: uppercase;
+    border: 1px solid #60ad8f;
+}
+
+.table {
+    width: 100%;
+    max-height: calc(100% - 170px);
+    overflow-y: auto;
+    border-bottom: 1px solid #c0c0c0;
+    box-sizing: border-box;
+}
+
+#dataList {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    height: 100%;
+	margin-bottom: 20px;
+}
+#dataList thead {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#dataList thead tr th {
+    position: sticky;
+    top: 0;
+    padding: 8px;
+    line-height: 40px;
+    text-align: left;
+    cursor: pointer;
+    min-width: 120px;
+    background-color: #e7efff;
+    color: #000;
+}
+
+
+#dataList tbody tr th {
+    /* background-color: #d6e5ff; */
+    text-align: left;
+    padding: 10px;
+}
+#dataList tbody tr td {
+	/* color: #000; */
+    padding: 10px;
+}
+
+
+
+</style>
+<div>
+
+	<!-- ------------------------------------------------------------------- -->
+	<!--- Header -->
+
+	<div class="header_page">
+		<!-- <img src="../api/documents/NY4oaHRPop9/data"> -->
+		<img src="../api/documents/SDSBYvEUiiR/data">
+		<div class="param-title-pgsInd">
+			<h1>MPHD submission status
+				<span style="font-size: 12px;"><a href="https://docs.google.com/document/d/1WNDcbtlA8pxL4mn8sOH2rQ7wLcyfeOyq2-ueAyJKE4M/" target="_blank" style="font-size:12px;">v 1.02</a></span>
+			</h1>
+		</div>
+	</div>
+
+	<!-- ----------- END - Header -----------------------------------------  -->
+	<!-- ------------------------------------------------------------------- -->
+
+	
+
+	<!-- ----------- Params  ----------------------------------------------  -->
+	<!-- ------------------------------------------------------------------- -->
+
+	<div class="param-area">
+
+		<div class="param-area_ptrs">
+
+			<!-- Country name ( OU Level 3)-->
+			<div class="field">
+				<div class="field__label"><label>Country Name</label><span style="color:red">*</span></div>
+				<div class="fiel__controls">
+					<div class="field__selector">
+						<select id="orgUnit"></select>
+					</div>
+				</div>
+			</div>
+			<!-- END - Country name selector -->
+
+			<!-- Period selector -->
+			<div class="field">
+				<div class="field__label"><label>Period</label><span style="color:red">*</span></div>
+				<div class="fiel__controls">
+					<div class="field__selector">
+						<select id="period"></select>
+					</div>
+				</div>
+			</div>
+			<!-- END - Period selector -->
+			
+			
+			<!-- RUN button -->
+			<div class="field" style="margin: 0px;">
+				<div class="field__label"></div>
+				<div class="fiel__controls">
+					<div class="field__selector">
+						<button id="runBtn" class="button">Run</button>
+					</div>
+				</div>
+			</div>
+			<!-- END - RUN button -->
+
+		</div>
+	
+
+	</div>
+	<!-- ----------- END - Params  ----------------------------------------  -->
+	<!-- ------------------------------------------------------------------- -->
+
+	<div class="content-area">
+
+		<div id="loaderDiv" style="display: none; text-align: center;">
+    
+			<br><br><br>
+			
+			<img src="../images/ajax-loader-circle.gif">
+			
+			<br><br><br>
+				
+			<p>Please wait while the system is processing...</p>
+			
+		</div>
+
+		<div class="table">
+			<table id="dataList" style="display:none;">
+				<thead>
+					<tr>
+						<th>Form</th>
+						<th>Period</th>
+						<th>Approved</th>
+						<th>Accepted</th>
+					</tr>
+				</thead>
+
+				<tbody></tbody>
+			</table>
+		</div>
+	</div>
+
+</div>
+
+<script>
+
+	// =========================================================================================================
+	// On Page Load Run
+	
+	$(document).ready(function () {
+		new SubmissionStatusReport();
+	});
+
+
+	// ==========================================================================================================
+	// Clazzes
+
+	function SubmissionStatusReport () {
+
+		 
+// select pe.startdate, pe.enddate, ds.uid as dsuid, da.accepted,  da.created,  da.creator
+// from dataApproval da 
+// inner join period pe on pe.periodid=da.periodid
+// inner join organisationunit ou on ou.organisationunitid = da.organisationunitid
+// inner join dataset ds on ds.Workflowid = da.Workflowid
+// where ds.uid in ('X1DxcWzE8iJ', 'jTOufdWNDu1','kYlWkjhFatU','nObRfWvZbjB','ZntEuyuogFm')
+
+// and ou.uid='${orgUnitId}'
+
+
+		var me = this;
+
+		me.orgUnitTag = $("#orgUnit");
+		me.periodTag = $("#period");
+		me.runBtnTag = $("#runBtn");
+
+		me.loaderDivTag = $("#loaderDiv");
+		me.dataListTag = $("#dataList");
+
+
+		// -----------------------------------------------------------------------------------------
+		// Variables
+
+		me.ORGUNIT_LEVEL = "3";
+		me.orgUnitListLoaded = false;
+		me.dataSetListLoaded = false;
+
+		me.dataSetList = [];
+
+		// -----------------------------------------------------------------------------------------
+		// IDs
+
+		me.ID_DATASET_COUNTRY_QUARTERLY = "X1DxcWzE8iJ";
+		me.ID_DATASET_DISTRICT_QUARTERLY = "jTOufdWNDu1";
+		me.ID_DATASET_DISTRICT_SIX_MONTH = "kYlWkjhFatU";
+		me.ID_DATASET_FACILITY_MONTHLY = "nObRfWvZbjB";
+		me.ID_DATASET_FACILITY_SIX_MONTH = "ZntEuyuogFm";
+
+
+		// -----------------------------------------------------------------------------------------
+		// URLs
+
+		// me.PARAM_PERIOD_LIST = "@PARAM_PERIOD_LIST";
+		// me.PARAM_WORKFLOW = "@PARAM_WORKFLOW";
+		me.PARAM_ORGUNIT_ID = "@PARAM_ORGUNIT_ID";
+		me.PARAM_START_DATE = "@PARAM_START_DATE";
+		me.PARAM_END_DATE = "@PARAM_END_DATE";
+
+		me.URL_QUERY_ORGUNITS_BY_LEVEL = "../api/organisationUnits.json?paging=false&filter=level:eq:" + me.ORGUNIT_LEVEL;
+
+		me.URL_QUERY_DATASETS = "../api/dataSets.json?paging=false&filter=id:in:[" + me.ID_DATASET_COUNTRY_QUARTERLY 
+			+ "," + me.ID_DATASET_DISTRICT_QUARTERLY 
+			+ "," + me.ID_DATASET_DISTRICT_SIX_MONTH 
+			+ "," + me.ID_DATASET_FACILITY_MONTHLY 
+			+ "," + me.ID_DATASET_FACILITY_SIX_MONTH +"]&fields=id,displayName,workflow,periodType";
+
+		me.URL_QUERY_APPROVALS = "../api/sqlViews/sSwP2mnpNxL/data.json?paging=false" 
+			+ "&var=orgUnitId:" + me.PARAM_ORGUNIT_ID 
+			+ "&var=startDate:" + me.PARAM_START_DATE 
+			+ "&var=endDate:" + me.PARAM_END_DATE 
+
+
+
+// 		select pe.startdate, ou.name, ou.uid, catOptCombo.name, catOptCombo.uid, catOption.uid, da.accepted
+// from dataApproval da 
+// inner join categoryoptioncombo catOptCombo on da.attributeoptioncomboid=catOptCombo.categoryoptioncomboid
+// inner join period pe on pe.periodid=da.periodid
+// inner join organisationunit ou on ou.organisationunitid = da.organisationunitid
+// inner join categoryoptioncombos_categoryoptions rel on rel.categoryoptioncomboid = catOptCombo.categoryoptioncomboid
+// inner join dataelementcategoryoption catOption on catOption.categoryoptionid = rel.categoryoptionid 
+
+		// -----------------------------------------------------------------------------------------
+		// Init method
+		
+		me.init = function() {
+			me.generatePeriodList();
+			me.retrieveOrgUnitList();
+			me.retrieveDataSetList();
+
+			me.setUp_Events();
+		}
+
+		
+		// -----------------------------------------------------------------------------------------
+		// Set up Events
+
+		me.setUp_Events = function() {
+
+			me.orgUnitTag.change(function(){
+				me.dataListTag.hide("slow");
+			});
+
+			me.periodTag.change(function(){
+				me.dataListTag.hide("slow");
+			})
+
+			me.runBtnTag.click( function(){
+
+				if( me.orgUnitTag.val() == "" || me.periodTag.val() == "" )
+				{
+					alert("Please select Country name and Period");
+				}
+				else {
+					me.retrieveAprovalData();
+				}
+				
+			});
+		}
+
+
+
+		// -----------------------------------------------------------------------------------------
+		// Generate period list
+
+		
+		me.generatePeriodList = () => {
+			const today = new Date();
+			const curYear = today.getFullYear();
+			const startYear = 2021;
+			const endYear = curYear + 4;
+
+
+			for( let year=startYear; year<=endYear; year++ )
+			{
+				if( year > startYear )
+				{
+					const periodObj2 = me.createPeriod_OctMar( year );
+					me.periodTag.append("<option value='" + periodObj2.value + "' period='" + JSON.stringify( periodObj2 ) + "'>" + periodObj2.displayName + "</option>");
+
+					me.checkAndSelectLastPeriod( periodObj2 );
+				}
+				
+				const periodObj1 = me.createPeriod_AprSep( year );
+				me.periodTag.append("<option value='" + periodObj1.value + "' period='" + JSON.stringify( periodObj1 ) + "'>" + periodObj1.displayName + "</option>");
+				
+				me.checkAndSelectLastPeriod( periodObj1 );
+			}
+
+			
+
+		}
+
+		me.checkAndSelectLastPeriod = function ( periodObj )
+		{
+			const curDate = DateUtil.getDbCurrentDate();
+			if( curDate >= periodObj.periodList.SixMonthlyApril.startDate && curDate <= periodObj.periodList.SixMonthlyApril.endDate )
+			{
+				const options = me.periodTag.find("option");
+				// Select last period
+				const lastPeriodOption = options[options.length - 2 ]; // ( options.length-1) is current period
+				me.periodTag.val( lastPeriodOption.val() );
+			}
+		}
+
+		me.createPeriod_AprSep = ( year ) => {
+			const displayName = DateUtil.MONTH_SHORT_NAME[3] + " " + year + " - " + DateUtil.MONTH_SHORT_NAME[8] + " " + year;
+			const value = "04" + year + "-" + "09" + year;
+
+			return {
+				displayName: displayName,
+				value: value,
+				periodList: {
+					"Quarterly": [
+						{
+							displayName: DateUtil.MONTH_SHORT_NAME[3] + " " + year + " - " + DateUtil.MONTH_SHORT_NAME[5] + " " + year,
+							startDate: year + "-04-01" ,
+							endDate: year + "-06-30"
+						},
+						{
+							displayName:  DateUtil.MONTH_SHORT_NAME[6] + " " + year + " - " + DateUtil.MONTH_SHORT_NAME[8] + " " + year,
+							startDate: year + "-07-01",
+							endDate: year + "-09-30"
+						}
+					],
+					"Monthly": me.createMonthlyPeriodList( 4, 9, year ),
+					"SixMonthlyApril" : [{
+						displayName: displayName,
+						startDate: year + "-04-01",
+						endDate: year + "-09-30"
+					}]
+				}
+			}
+		}
+
+		
+		me.createPeriod_OctMar = function( year ) {
+			const preYear = year - 1;
+			const displayName = DateUtil.MONTH_SHORT_NAME[9] + " " + preYear + " - " + DateUtil.MONTH_SHORT_NAME[2] + " " + year;
+			const value = "10" + preYear + "-" + "03" + year;
+			
+			let monthlyPeriodList1 = me.createMonthlyPeriodList( 10, 12, preYear );
+			let monthlyPeriodList2 = me.createMonthlyPeriodList( 1, 3, year );
+
+			return {
+				displayName: displayName,
+				value: value,
+
+				periodList: {
+					"Quarterly": [
+						{
+							displayName: DateUtil.MONTH_SHORT_NAME[9] + " " + preYear + " - " + DateUtil.MONTH_SHORT_NAME[11] + " " + preYear,
+							startDate: preYear + "-10-01",
+							endDate: year + "-12-31"
+						},
+						{
+							displayName: DateUtil.MONTH_SHORT_NAME[0] + " " + year + " - " + DateUtil.MONTH_SHORT_NAME[2] + " " + year,
+							startDate: year + "-01-01",
+							endDate: year + "-03-31"
+						}
+					],
+					"Monthly": monthlyPeriodList1.concat( monthlyPeriodList1 ),
+					"SixMonthlyApril" : [{
+						displayName: displayName,
+						startDate: year + "-04-01",
+						endDate: year + "-09-30"
+					}]
+				}
+			}
+		}
+
+		me.createMonthlyPeriodList = function( startMonth, endMonth, year ) 
+		{
+			let list = [];
+			for( var displayMonth=startMonth; displayMonth<=endMonth; displayMonth++ )
+			{
+				const month = ( displayMonth < 10 ) ? "0" + displayMonth : displayMonth;
+
+				var endDate = new Date( year, eval(displayMonth) );
+
+				endDate.setDate( endDate.getDate() - 1 );
+				var endDay = endDate.getDate();
+				var endDay = ( endDay < 10 ) ? "0" + endDay : endDay;
+
+				list.push({
+					displayName: DateUtil.MONTH_SHORT_NAME[ displayMonth - 1] + " "+ year,
+					startDate: year + "-" + month + "-01",
+					endDate: year + "-" + month + "-" + endDay
+				})
+			}
+
+			return list;
+		}
+
+		// -----------------------------------------------------------------------------------------
+		// Retreive init data
+
+		me.retrieveOrgUnitList = function()
+		{
+			me.orgUnitTag.find("option").remove();
+
+			RESTUtil.retrieveData(me.URL_QUERY_ORGUNITS_BY_LEVEL, function(response){
+				
+				// Populate orgunits
+				const orgUnitList = response.organisationUnits;
+				me.orgUnitTag.append("<option value=''>[Please select]</option>");
+				for( var i=0; i<orgUnitList.length; i++ )
+				{
+					const orgUnit = orgUnitList[i];
+					me.orgUnitTag.append("<option value='" + orgUnit.id + "'>" + orgUnit.displayName + "</option>");
+				}
+
+
+				me.orgUnitListLoaded = true;
+				me.afterInitData();
+				
+			}, function(e){
+				alert( e.message );
+			})
+		}
+
+		me.retrieveDataSetList = function()
+		{
+			RESTUtil.retrieveData(me.URL_QUERY_DATASETS, function(response){
+				me.dataSetList = response.dataSets;
+
+				me.dataSetListLoaded = true;
+				me.afterInitData();
+
+			}, function(e){
+				alert( e.message );
+			})
+		}
+		
+		me.afterInitData = function( )
+		{
+			if( me.orgUnitListLoaded && me.dataSetListLoaded )
+			{
+				// me.orgUnitTag.val("BnTs9upm2xb");
+			}
+		}	
+		
+		// -----------------------------------------------------------------------------------------
+		// Retreive Approvals data
+
+// 		me.retrieveAprovalData = function( )
+// 		{
+// 			me.loaderDivTag.show();
+// 			me.dataListTag.hide();
+
+// 			var tbody = me.dataListTag.find("tbody");
+// 			tbody.find("tr").remove();
+
+// 			const orgUnitId = me.orgUnitTag.val();
+// 			const periodObj = JSON.parse( me.periodTag.find("option:selected").attr("period") );
+
+// var response = {
+//     "listGrid": {
+//         "metaData": {},
+//         "headerWidth": 8,
+//         "width": 8,
+//         "title": "MPHD submission status",
+//         "height": 16,
+//         "headers": [
+//             {
+//                 "hidden": false,
+//                 "meta": false,
+//                 "name": "startdate",
+//                 "column": "startdate",
+//                 "type": "java.lang.String"
+//             },
+//             {
+//                 "hidden": false,
+//                 "meta": false,
+//                 "name": "enddate",
+//                 "column": "enddate",
+//                 "type": "java.lang.String"
+//             },
+//             {
+//                 "hidden": false,
+//                 "meta": false,
+//                 "name": "dsuid",
+//                 "column": "dsuid",
+//                 "type": "java.lang.String"
+//             },
+//             {
+//                 "hidden": false,
+//                 "meta": false,
+//                 "name": "action",
+//                 "column": "action",
+//                 "type": "java.lang.String"
+//             },
+//             {
+//                 "hidden": false,
+//                 "meta": false,
+//                 "name": "created",
+//                 "column": "created",
+//                 "type": "java.lang.String"
+//             },
+//             {
+//                 "hidden": false,
+//                 "meta": false,
+//                 "name": "username",
+//                 "column": "username",
+//                 "type": "java.lang.String"
+//             },
+//             {
+//                 "hidden": false,
+//                 "meta": false,
+//                 "name": "surname",
+//                 "column": "surname",
+//                 "type": "java.lang.String"
+//             },
+//             {
+//                 "hidden": false,
+//                 "meta": false,
+//                 "name": "firstname",
+//                 "column": "firstname",
+//                 "type": "java.lang.String"
+//             }
+//         ],
+//         "rows": [
+//             [
+//                 "2021-04-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "ZntEuyuogFm",
+//                 "APPROVE",
+//                 "2022-01-13T15:17:34.896",
+//                 "jtossou",
+//                 "TOSSOU",
+//                 "Justin"
+//             ],
+//             [
+//                 "2021-08-01T00:00:00.000",
+//                 "2021-08-31T00:00:00.000",
+//                 "nObRfWvZbjB",
+//                 "APPROVE",
+//                 "2022-01-13T15:23:18.216",
+//                 "jtossou",
+//                 "TOSSOU",
+//                 "Justin"
+//             ],
+//             [
+//                 "2021-09-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "nObRfWvZbjB",
+//                 "APPROVE",
+//                 "2022-01-13T15:24:10.631",
+//                 "jtossou",
+//                 "TOSSOU",
+//                 "Justin"
+//             ],
+//             [
+//                 "2021-04-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "kYlWkjhFatU",
+//                 "APPROVE",
+//                 "2022-01-13T15:27:01.956",
+//                 "jtossou",
+//                 "TOSSOU",
+//                 "Justin"
+//             ],
+//             [
+//                 "2021-07-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "jTOufdWNDu1",
+//                 "APPROVE",
+//                 "2022-01-13T15:41:03.363",
+//                 "jtossou",
+//                 "TOSSOU",
+//                 "Justin"
+//             ],
+//             [
+//                 "2021-07-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "X1DxcWzE8iJ",
+//                 "APPROVE",
+//                 "2022-01-13T15:57:41.299",
+//                 "jtossou",
+//                 "TOSSOU",
+//                 "Justin"
+//             ],
+//             [
+//                 "2021-07-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "jTOufdWNDu1",
+//                 "ACCEPT",
+//                 "2022-01-13T17:07:16.420",
+//                 "gjaworski",
+//                 "Jaworski",
+//                 "Grace"
+//             ],
+//             [
+//                 "2021-07-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "X1DxcWzE8iJ",
+//                 "ACCEPT",
+//                 "2022-01-13T17:07:59.356",
+//                 "gjaworski",
+//                 "Jaworski",
+//                 "Grace"
+//             ],
+//             [
+//                 "2021-04-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "kYlWkjhFatU",
+//                 "ACCEPT",
+//                 "2022-01-13T17:09:14.081",
+//                 "gjaworski",
+//                 "Jaworski",
+//                 "Grace"
+//             ],
+//             [
+//                 "2021-09-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "nObRfWvZbjB",
+//                 "ACCEPT",
+//                 "2022-01-13T17:09:51.271",
+//                 "gjaworski",
+//                 "Jaworski",
+//                 "Grace"
+//             ],
+//             [
+//                 "2021-08-01T00:00:00.000",
+//                 "2021-08-31T00:00:00.000",
+//                 "nObRfWvZbjB",
+//                 "ACCEPT",
+//                 "2022-01-13T17:10:16.908",
+//                 "gjaworski",
+//                 "Jaworski",
+//                 "Grace"
+//             ],
+//             [
+//                 "2021-04-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "ZntEuyuogFm",
+//                 "ACCEPT",
+//                 "2022-01-13T17:11:14.669",
+//                 "gjaworski",
+//                 "Jaworski",
+//                 "Grace"
+//             ],
+//             [
+//                 "2021-07-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "jTOufdWNDu1",
+//                 "UNACCEPT",
+//                 "2022-01-17T17:15:57.988",
+//                 "gjaworski",
+//                 "Jaworski",
+//                 "Grace"
+//             ],
+//             [
+//                 "2021-07-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "jTOufdWNDu1",
+//                 "UNAPPROVE",
+//                 "2022-01-18T12:08:59.973",
+//                 "jtossou",
+//                 "TOSSOU",
+//                 "Justin"
+//             ],
+//             [
+//                 "2021-07-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "jTOufdWNDu1",
+//                 "APPROVE",
+//                 "2022-01-19T14:42:12.266",
+//                 "jtossou",
+//                 "TOSSOU",
+//                 "Justin"
+//             ],
+//             [
+//                 "2021-07-01T00:00:00.000",
+//                 "2021-09-30T00:00:00.000",
+//                 "jTOufdWNDu1",
+//                 "ACCEPT",
+//                 "2022-01-19T15:29:13.413",
+//                 "gjaworski",
+//                 "Jaworski",
+//                 "Grace"
+//             ]
+//         ]
+//     }
+// }
+				
+// 				for( var i=0; i<me.dataSetList.length; i++ )
+// 				{
+// 					var dataSet = me.dataSetList[i];
+// 					var periodType = dataSet.periodType;
+// 					const periodList = periodObj.periodList[periodType];
+// 					const bgColor = ( i%2 == 0 ) ? "#fff" : "#eff5ff";
+
+// 					for( var j=0; j<periodList.length; j++ )
+// 					{
+// 						var rowTag = $("<tr dsId='" + dataSet.id 
+// 								+ "' startDate='" + periodList[j].startDate 
+// 								+ "' endDate='" + periodList[j].endDate + "'></tr>");
+
+// 						if( j==0 )
+// 						{
+// 							rowTag.append("<th style='background-color:" + bgColor + "' rowspan='" + periodList.length + "'>" + dataSet.displayName + "</th>");
+// 						}
+
+// 						rowTag.append("<td style='background-color:" + bgColor + "'>" + periodList[j].displayName + "</td>" );
+// 						rowTag.append("<td style='background-color:" + bgColor + "' class='approved'></td>" );
+// 						rowTag.append("<td style='background-color:" + bgColor + "' class='accepted'></td>" );
+// 						tbody.append( rowTag );
+// 					}
+					
+
+// 				}
+
+// 				// Populate data
+// 				const dataRows = response.listGrid.rows;
+// 				const groupedApprovalData = {};
+// 				for( var i=0; i<dataRows.length; i++ )
+// 				{
+// 					const dataRow = dataRows[i];
+
+// 					const peStartDate = dataRow[0].substring( 0, 10 );
+// 					const peEndDate = dataRow[1].substring( 0, 10 );
+// 					const dataSetId = dataRow[2];
+// 					const status = dataRow[3];
+// 					const created = dataRow[4]; //DateUtil.convertUTCToDisplayLocalDateTime( dataRow[4] );
+// 					const creator = dataRow[6] + " " + dataRow[7] + "(" + dataRow[5] + ")"; // Full name ( username )
+
+
+// 					const key = dataSetId + "*" + peStartDate + "*" + peEndDate;
+// 					if( groupedApprovalData[key] == undefined )
+// 					{
+// 						groupedApprovalData[key] = {};
+// 					}
+
+// 					if( status == "APPROVE" || status == "UNAPPROVE" )
+// 					{
+// 						if( groupedApprovalData[key].approve == undefined )
+// 						{
+// 							groupedApprovalData[key].approve = [];
+// 						}
+
+
+// 						groupedApprovalData[key].approve.push({
+// 							key: key,
+// 							status: status,
+// 							created: created,
+// 							creator: creator
+// 						});
+// 					}
+// 					else if( status == "ACCEPT" || status == "UNACCEPT" )
+// 					{
+// 						if( groupedApprovalData[key].accept == undefined )
+// 						{
+// 							groupedApprovalData[key].accept = [];
+// 						}
+
+// 						groupedApprovalData[key].accept.push({
+// 							key: key,
+// 							status: status,
+// 							created: created,
+// 							creator: creator
+// 						});
+// 					}
+
+					
+
+// 					// tbody.find("[dsId='" + dataSetId + "']").each(function(){
+// 					// 	var rowTag = $(this);
+// 					// 	const startDate = rowTag.attr("startDate");
+// 					// 	const endDate = rowTag.attr("endDate");
+// 					// 	if( peStartDate == startDate && peEndDate == endDate )
+// 					// 	{
+// 					// 		if( status == "APPROVE" )
+// 					// 		{
+// 					// 			rowTag.find(".approved").html( creator + ", " + created );
+// 					// 		}
+// 					// 		else if( status == "ACCEPT" )
+// 					// 		{
+// 					// 			rowTag.find(".accepted").html( creator + ", " + created );
+// 					// 		}
+// 					// 	}
+// 					// })
+// 				}
+				
+// 				var dataList = [];
+// 				const keyList = Object.keys( groupedApprovalData );
+// 				for( var i=0; i<keyList.length; i++ )
+// 				{
+// 					const key = keyList[i];
+// 					const data =  groupedApprovalData[key];// 
+// 					if( data.approve != undefined )
+// 					{
+// 						var list = me.sortByCreatedDate( data.approve );
+// 						if( list[0].status == "APPROVE")
+// 						{
+// 							dataList.push( list[0] );
+// 						}
+						
+// 					}
+					
+// 					if( data.accept != undefined )
+// 					{
+// 						var list = me.sortByCreatedDate( data.accept );
+// 						if( list[0].status == "ACCEPT")
+// 						{
+// 							dataList.push( list[0] );
+// 						}
+// 					}
+					
+// 				}
+				
+// 				for( var i=0; i<dataList.length; i++ )
+// 				{
+// 					const data = dataList[i];
+// 					const keys = data.key.split("*");
+// 					const dataSetId = keys[0];
+// 					const peStartDate = keys[1];
+// 					const peEndDate = keys[2];
+// 					const status = data.status;
+// 					const created =  DateUtil.convertUTCToDisplayLocalDateTime( data.created );
+
+// 					tbody.find("[dsId='" + dataSetId + "']").each(function(){
+// 						var rowTag = $(this);
+// 						const startDate = rowTag.attr("startDate");
+// 						const endDate = rowTag.attr("endDate");
+// 						if( peStartDate == startDate && peEndDate == endDate )
+// 						{
+// 							if( status == "APPROVE" )
+// 							{
+// 								rowTag.find(".approved").html( data.creator + ", " + created );
+// 							}
+// 							else if( status == "ACCEPT" )
+// 							{
+// 								rowTag.find(".accepted").html( data.creator + ", " + created );
+// 							}
+// 						}
+// 					})
+// 				}
+				
+
+// 				me.loaderDivTag.hide();
+// 				me.dataListTag.show();
+
+// 		}
+
+		me.retrieveAprovalData = function( )
+		{
+			me.loaderDivTag.show();
+			me.dataListTag.hide();
+
+			var tbody = me.dataListTag.find("tbody");
+			tbody.find("tr").remove();
+
+			const orgUnitId = me.orgUnitTag.val();
+			const periodObj = JSON.parse( me.periodTag.find("option:selected").attr("period") );
+
+
+			let url = me.URL_QUERY_APPROVALS;
+			url = url.replace( me.PARAM_ORGUNIT_ID, orgUnitId );
+			url = url.replace( me.PARAM_START_DATE, periodObj.periodList.SixMonthlyApril[0].startDate );
+			url = url.replace( me.PARAM_END_DATE, periodObj.periodList.SixMonthlyApril[0].endDate );
+
+			RESTUtil.retrieveData( url, function(response){
+				// Create empty content
+
+				
+				for( var i=0; i<me.dataSetList.length; i++ )
+				{
+					var dataSet = me.dataSetList[i];
+					var periodType = dataSet.periodType;
+					const periodList = periodObj.periodList[periodType];
+					const bgColor = ( i%2 == 0 ) ? "#fff" : "#eff5ff";
+
+					for( var j=0; j<periodList.length; j++ )
+					{
+						var rowTag = $("<tr dsId='" + dataSet.id 
+								+ "' startDate='" + periodList[j].startDate 
+								+ "' endDate='" + periodList[j].endDate + "'></tr>");
+
+						if( j==0 )
+						{
+							rowTag.append("<th style='background-color:" + bgColor + "' rowspan='" + periodList.length + "'>" + dataSet.displayName + "</th>");
+						}
+
+						rowTag.append("<td style='background-color:" + bgColor + "'>" + periodList[j].displayName + "</td>" );
+						rowTag.append("<td style='background-color:" + bgColor + "' class='approved'></td>" );
+						rowTag.append("<td style='background-color:" + bgColor + "' class='accepted'></td>" );
+						tbody.append( rowTag );
+					}
+					
+
+				}
+
+				// Populate data
+				const dataRows = response.listGrid.rows;
+				const groupedApprovalData = {};
+				for( var i=0; i<dataRows.length; i++ )
+				{
+					const dataRow = dataRows[i];
+
+					const peStartDate = dataRow[0].substring( 0, 10 );
+					const peEndDate = dataRow[1].substring( 0, 10 );
+					const dataSetId = dataRow[2];
+					const status = dataRow[3];
+					const created = dataRow[4]; //DateUtil.convertUTCToDisplayLocalDateTime( dataRow[4] );
+					const creator = dataRow[6] + " " + dataRow[7] + "(" + dataRow[5] + ")"; // Full name ( username )
+
+
+					const key = dataSetId + "*" + peStartDate + "*" + peEndDate;
+					if( groupedApprovalData[key] == undefined )
+					{
+						groupedApprovalData[key] = {};
+					}
+
+					if( status == "APPROVE" || status == "UNAPPROVE" )
+					{
+						if( groupedApprovalData[key].approve == undefined )
+						{
+							groupedApprovalData[key].approve = [];
+						}
+
+
+						groupedApprovalData[key].approve.push({
+							key: key,
+							status: status,
+							created: created,
+							creator: creator
+						});
+					}
+					else if( status == "ACCEPT" || status == "UNACCEPT" )
+					{
+						if( groupedApprovalData[key].accept == undefined )
+						{
+							groupedApprovalData[key].accept = [];
+						}
+
+						groupedApprovalData[key].accept.push({
+							key: key,
+							status: status,
+							created: created,
+							creator: creator
+						});
+					}
+
+					
+
+					// tbody.find("[dsId='" + dataSetId + "']").each(function(){
+					// 	var rowTag = $(this);
+					// 	const startDate = rowTag.attr("startDate");
+					// 	const endDate = rowTag.attr("endDate");
+					// 	if( peStartDate == startDate && peEndDate == endDate )
+					// 	{
+					// 		if( status == "APPROVE" )
+					// 		{
+					// 			rowTag.find(".approved").html( creator + ", " + created );
+					// 		}
+					// 		else if( status == "ACCEPT" )
+					// 		{
+					// 			rowTag.find(".accepted").html( creator + ", " + created );
+					// 		}
+					// 	}
+					// })
+				}
+				
+				var dataList = [];
+				const keyList = Object.keys( groupedApprovalData );
+				for( var i=0; i<keyList.length; i++ )
+				{
+					const key = keyList[i];
+					const data =  groupedApprovalData[key];// 
+					if( data.approve != undefined )
+					{
+						var list = me.sortByCreatedDate( data.approve );
+						if( list[0].status == "APPROVE")
+						{
+							dataList.push( list[0] );
+						}
+						
+					}
+					
+					if( data.accept != undefined )
+					{
+						var list = me.sortByCreatedDate( data.accept );
+						if( list[0].status == "ACCEPT")
+						{
+							dataList.push( list[0] );
+						}
+					}
+					
+				}
+				
+				for( var i=0; i<dataList.length; i++ )
+				{
+					const data = dataList[i];
+					const keys = data.key.split("*");
+					const dataSetId = keys[0];
+					const peStartDate = keys[1];
+					const peEndDate = keys[2];
+					const status = data.status;
+					const created =  DateUtil.convertUTCToDisplayLocalDateTime( data.created );
+
+					tbody.find("[dsId='" + dataSetId + "']").each(function(){
+						var rowTag = $(this);
+						const startDate = rowTag.attr("startDate");
+						const endDate = rowTag.attr("endDate");
+						if( peStartDate == startDate && peEndDate == endDate )
+						{
+							if( status == "APPROVE" )
+							{
+								rowTag.find(".approved").html( data.creator + ", " + created );
+							}
+							else if( status == "ACCEPT" )
+							{
+								rowTag.find(".accepted").html( data.creator + ", " + created );
+							}
+						}
+					})
+				}
+				
+
+				me.loaderDivTag.hide();
+				me.dataListTag.show();
+
+			}, function(e){
+				me.loaderDivTag.hide();
+				alert( e.message );
+			})
+		}
+		
+
+		
+		// -----------------------------------------------------------------------------------------
+		// Supportive methods
+				
+		me.sortByCreatedDate = function( array ) {
+			return array.sort( function( a, b ) {
+				
+				var x = a.created; 
+				var y = b.created;
+
+				if ( x === undefined ) x = "";
+				if ( y === undefined ) y = "";
+				
+				return ( ( x > y ) ? -1 : ( ( x < y ) ? 1 : 0 ) );
+			});
+		};
+
+
+		
+		// -----------------------------------------------------------------------------------------
+		// Run init method
+
+		me.init();
+	}
+
+
+	
+	// ==========================================================================================================
+	// Clazzes DateUtil
+
+	
+	function DateUtil() {}
+
+	DateUtil.MONTH_SHORT_NAME = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+	
+	DateUtil.convertUTCToDisplayLocalDateTime = ( dateStr ) => {
+		var localDbDateStr = DateUtil.convertUTCToDbLocalDate( dateStr );
+		return DateUtil.formatDisplayDateTime( localDbDateStr);
+	}
+
+	// dateStr: "2022-02-01T13:02:17.882"
+	DateUtil.convertUTCToDbLocalDate = function(dateStr ) 
+	{
+		var date = new Date(dateStr + "Z");
+		const offsetMs = date.getTimezoneOffset() * 60 * 1000;
+		const msLocal =  date.getTime() - offsetMs;
+		const dateLocal = new Date(msLocal);
+		const iso = dateLocal.toISOString();
+		const isoLocal = iso.slice(0, 19);
+		return isoLocal;
+	}
+
+	DateUtil.formatDisplayDate = function( dateStr )
+	{
+
+		var arrDate = dateStr.substring( 0, 10 ).split("-");
+		const month = eval( arrDate[1] * 1 ) - 1;
+		return arrDate[0] + " " + DateUtil.MONTH_SHORT_NAME[month] + " " + arrDate[2];
+	}
+
+	DateUtil.formatDisplayDateTime = function( dateStr ) 
+	{
+		var time = dateStr.substring( 11, 19 );
+		return DateUtil.formatDisplayDate( dateStr ) + " " + time;
+	}
+
+
+	DateUtil.getDbCurrentDate = function()
+	{
+		var date = new Date();
+		
+		var day = date.getDate();
+		day = ( day < 10 ) ? "0" + day : day;
+
+		var month = date.getMonth() + 1;
+		month = ( month < 10 ) ? "0" + month : month;
+
+		return date.getFullYear() + "-" + month + "-" + day;
+	}
+
+
+	// ==========================================================================================================
+	// Clazzes RESTUtil
+
+	function RESTUtil() {}
+
+	RESTUtil.retrieveData = function( url, actionSuccess, actionError, loadingStart, loadingEnd ) 
+	{
+		return $.ajax({
+			type: "GET"
+			,dataType: "json"
+			,url: url
+			,async: true
+			,success: actionSuccess
+			,error: actionError
+			,beforeSend: function( xhr ) {
+				if ( loadingStart !== undefined ) loadingStart();
+			}
+		})
+		.always( function( data ) {
+			if ( loadingEnd !== undefined ) loadingEnd();
+		});
+	}
+
+</script>
+
+</html>
