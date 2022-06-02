@@ -1,0 +1,195 @@
+{
+    "system": {
+        "id": "6544fca7-7e35-44ee-be5d-e823d89c64b4",
+        "rev": "0a0d8e3",
+        "version": "2.36.10.1-SNAPSHOT",
+        "date": "2022-06-02T04:57:54.000"
+    },
+    "categoryOptions": [
+        {
+            "name": "MPHD_DS_FM_Tab1_00_ Child Health ",
+            "id": "JYaPYuioUJk"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab1_10_CH.1_Diarrhea Treatment",
+            "id": "RJhW493KxNw"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab1_20_CH.2_Pneumonia Treatment",
+            "id": "XAZM5qO9KiL"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab1_30_CH.3_Malaria Treatment",
+            "id": "ULmkmaeFGYp"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab1_40_CH+Nut.1_Malnutrition treatment",
+            "id": "fDBMSzpKUvO"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab1_50_CH+Nut.1_Number of children under five reached with direct food assistance",
+            "id": "mHDhxZCsxjv"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab1_60_G5/CH+Nut.1 Number of children under five reached with nutrition programs",
+            "id": "L0VraDUk73x"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab1_70_Ch+Nut.2 Number of children 6-59m seen",
+            "id": "ekjZ6gTCu6H"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab1_80_Ch+Nut.2/3 Malnutrition",
+            "id": "WloWx1eg4h4"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab2_00_Family Planning",
+            "id": "ytJ3YtA7PKb"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab2_10_FP.RH.2 Number of family planning client visits",
+            "id": "WdS7hLaWmfm"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab2_20_FP.RH.3 Women who deliver and initiate or leave with a voluntary modern contraceptive method",
+            "id": "EG1QurQhpSc"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab2_30_FP.RH.4 Number of women who receive post abortion care services",
+            "id": "UFURiWV29Ef"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab2_40_FP.RH.4 Number of women who receive post-abortion care services and initiate or leave with a voluntary modern contraceptive",
+            "id": "OEyymHL95Uf"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab3_00_Immunization",
+            "id": "QQIwMnaLdXN"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab3_10_Imm.1 DPT",
+            "id": "nq0EQYvfTuN"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab3_20_Imm.3-4 Measles",
+            "id": "lzyBWMjt25A"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab4_00_Maternal Health",
+            "id": "HCc7WYbkbtl"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab4_10_MNH.1 Maternal Health",
+            "id": "j0qF4VvqsUj"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab4_20_MNH.10 Number of newborns who die before discharge from facility due to",
+            "id": "FgkR0iKfuld"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab4_30_MNH.11 Number of stillbirths",
+            "id": "S3F0KWVpbLl"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab4_40_MNH.12 Number of newborns",
+            "id": "OX2u4DVxMLV"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab4_50_MNH.13/14 Number of newborns",
+            "id": "huRCo7HaJst"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab4_60_MNH.2/3 Number of antenatal clients",
+            "id": "NHmJ3Zle0hn"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab4_70_MNH.4 Number of pregnant women reached with nutrition-specific interventions",
+            "id": "sCfI0uQuMgR"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab4_80_MNH.5/6/7 Number of women giving birth",
+            "id": "HBczEzx2Zkv"
+        },
+        {
+            "name": "MPHD_DS_FM_Tab4_90_MNH.9 Number of maternal deaths due to:",
+            "id": "M881pHkdZo4"
+        },
+        {
+            "name": "MPHD_DS_FSM_Tab1_00_Facilities",
+            "id": "Sq2K2cKqCgJ"
+        },
+        {
+            "name": "MPHD_DS_FSM_Tab1_10_Facility Six-monthly Estimated Children Ages <12; 12-24 months",
+            "id": "gzeT8vHSDIx"
+        },
+        {
+            "name": "MPHD_DS_FSM_Tab1_20_PSI PWI 2.6_PSI_providers trained in service provision NEW",
+            "id": "WsZxuqdjqxK"
+        },
+        {
+            "name": "MPHD_DS_FSM_Tab1_20_PSI PWI 2.6_PSI_providers trained in service provision",
+            "id": "X2oFP1Y9cSz"
+        },
+        {
+            "name": "MPHD_DS_FSM_Tab2_00_X.Cut",
+            "id": "RXB05TUtcpY"
+        },
+        {
+            "name": "MPHD_DS_FSM_Tab2_10_MOMENTUM-supported facilities implementing QI (X.Cut 2 and 3) ",
+            "id": "uIV9qAbCPn6"
+        }
+    ],
+    "categories": [
+        {
+            "name": "MPHD_DS_FM",
+            "id": "vYXG1JPsjlX",
+            "shortName": "MPHD_DS_FM",
+            "dataDimensionType": "DISAGGREGATION",
+            "dataDimension": true,
+            "categoryOptions": [
+                {"id": "JYaPYuioUJk"},
+                {"id": "RJhW493KxNw"},
+                {"id": "XAZM5qO9KiL"},
+                {"id": "ytJ3YtA7PKb"},
+                {"id": "QQIwMnaLdXN"},
+                {"id": "HCc7WYbkbtl"},
+                {"id": "fDBMSzpKUvO"},
+                {"id": "mHDhxZCsxjv"},
+                {"id": "WloWx1eg4h4"},
+                {"id": "ekjZ6gTCu6H"},
+                {"id": "L0VraDUk73x"},
+                {"id": "WdS7hLaWmfm"},
+                {"id": "EG1QurQhpSc"},
+                {"id": "UFURiWV29Ef"},
+                {"id": "OEyymHL95Uf"},
+                {"id": "nq0EQYvfTuN"},
+                {"id": "lzyBWMjt25A"},
+                {"id": "j0qF4VvqsUj"},
+                {"id": "FgkR0iKfuld"},
+                {"id": "S3F0KWVpbLl"},
+                {"id": "OX2u4DVxMLV"},
+                {"id": "huRCo7HaJst"},
+                {"id": "NHmJ3Zle0hn"},
+                {"id": "sCfI0uQuMgR"},
+                {"id": "HBczEzx2Zkv"},
+                {"id": "M881pHkdZo4"},
+                {"id": "ULmkmaeFGYp"}
+            ]
+        },
+        {
+            "name": "MPHD_DS_FSM",
+            "id": "pUlIhiys6jD",
+            "shortName": "MPHD_DS_FSM",
+            "dataDimensionType": "DISAGGREGATION",
+            "dataDimension": true,
+            "categoryOptions": [
+                {"id": "Sq2K2cKqCgJ"},
+                {"id": "gzeT8vHSDIx"},
+                {"id": "X2oFP1Y9cSz"},
+                {"id": "WsZxuqdjqxK"},
+                {"id": "RXB05TUtcpY"},
+                {"id": "uIV9qAbCPn6"}
+            ]
+        }
+    ]
+}
