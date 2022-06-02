@@ -1,0 +1,528 @@
+{
+    "system": {
+        "id": "6544fca7-7e35-44ee-be5d-e823d89c64b4",
+        "rev": "0a0d8e3",
+        "version": "2.36.10.1-SNAPSHOT",
+        "date": "2022-05-31T06:26:24.387"
+    },
+    "programIndicators": [
+        {
+            "code": "MPHD PWI 1.5",
+            "id": "Awe6BmcBr6x",
+            "name": "MPHD PWI 1.5 # actitvites w/ gndr cmpnt [gen.1] ",
+            "shortName": "MPHD PWI 1.5 # actitvites w/ gndr cmpnt [gen.1] ",
+            "aggregationType": "COUNT",
+            "expression": "V{event_count}",
+            "sharing": {
+                "owner": "ricmoiRBurV",
+                "external": false,
+                "users": "",
+                "userGroups": "",
+                "public": "rw------"
+            },
+            "filter": "#{TRpnm9WHL7h.SKEUDJUzxHq} == 'PWI 1.5'",
+            "analyticsType": "EVENT",
+            "program": {"id": "pZc9MOvkueP"},
+            "analyticsPeriodBoundaries": [
+                {
+                    "lastUpdated": "2021-06-23T22:05:57.508",
+                    "id": "cHsRQupTeHY",
+                    "created": "2021-06-23T22:05:57.508",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "BEFORE_END_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                },
+                {
+                    "lastUpdated": "2021-06-23T22:05:57.508",
+                    "id": "xYbakTVkURr",
+                    "created": "2021-06-23T22:05:57.508",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "AFTER_START_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                }
+            ]
+        },
+        {
+            "code": "MPHD PWI 1.6",
+            "id": "UWXnRiLg82z",
+            "name": "MPHD PWI 1.6 # intvns co-designed w/ users [PSI] ",
+            "shortName": "MPHD PWI 1.6 # intvns co-designed w/ users [PSI] ",
+            "aggregationType": "COUNT",
+            "expression": "V{event_count}",
+            "sharing": {
+                "owner": "ricmoiRBurV",
+                "external": false,
+                "users": "",
+                "userGroups": "",
+                "public": "rw------"
+            },
+            "filter": "#{TRpnm9WHL7h.SKEUDJUzxHq} == 'PWI 1.5' || #{TRpnm9WHL7h.SKEUDJUzxHq} == 'PWI 3.1'",
+            "analyticsType": "EVENT",
+            "program": {"id": "pZc9MOvkueP"},
+            "analyticsPeriodBoundaries": [
+                {
+                    "lastUpdated": "2021-06-23T22:07:35.480",
+                    "id": "dMKAwkLoiJ2",
+                    "created": "2021-06-23T22:05:57.508",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "BEFORE_END_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                },
+                {
+                    "lastUpdated": "2021-06-23T22:07:35.480",
+                    "id": "Jlp4tT29QsX",
+                    "created": "2021-06-23T22:05:57.508",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "AFTER_START_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                }
+            ]
+        },
+        {
+            "code": "MPHD PWI 2.3",
+            "id": "J0wFmSeAqTt",
+            "name": "MPHD PWI 2.3 # policies for MOH/priv prvdrs [PSI] ",
+            "shortName": "MPHD PWI 2.3 # policies for MOH/priv prvdrs [PSI] ",
+            "aggregationType": "COUNT",
+            "expression": "V{event_count}",
+            "sharing": {
+                "owner": "ricmoiRBurV",
+                "external": false,
+                "users": "",
+                "userGroups": "",
+                "public": "rw------"
+            },
+            "filter": "#{TRpnm9WHL7h.SKEUDJUzxHq} == 'PWI 2.3'",
+            "analyticsType": "EVENT",
+            "program": {"id": "pZc9MOvkueP"},
+            "analyticsPeriodBoundaries": [
+                {
+                    "lastUpdated": "2021-06-23T22:08:46.681",
+                    "id": "pLIIUHXxhjv",
+                    "created": "2021-06-23T22:05:57.508",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "BEFORE_END_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                },
+                {
+                    "lastUpdated": "2021-06-23T22:08:46.681",
+                    "id": "i2S6bs1s4C0",
+                    "created": "2021-06-23T22:05:57.508",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "AFTER_START_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                }
+            ]
+        },
+        {
+            "code": "MPHD PWI 3.1 NEW",
+            "id": "iI8lFFNgW7m",
+            "name": "MPHD PWI 3.1 - # of innovations supported through MPHD (IN.1) [PSI]",
+            "shortName": "MPHD PWI 3.1 - # of innovations supported (IN.1)",
+            "aggregationType": "COUNT",
+            "expression": "V{event_count}",
+            "sharing": {
+                "owner": "yjRdqHnhju2",
+                "external": false,
+                "users": "",
+                "userGroups": "",
+                "public": "rw------"
+            },
+            "filter": "#{TRpnm9WHL7h.SKEUDJUzxHq} == \"PWI 3.1\"",
+            "analyticsType": "EVENT",
+            "program": {"id": "pZc9MOvkueP"},
+            "analyticsPeriodBoundaries": [
+                {
+                    "lastUpdated": "2022-04-27T17:21:15.666",
+                    "id": "h6S9Agaecgn",
+                    "created": "2022-04-27T06:30:14.828",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "BEFORE_END_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                },
+                {
+                    "lastUpdated": "2022-04-27T17:21:15.666",
+                    "id": "avEqlooubKZ",
+                    "created": "2022-04-27T06:30:14.828",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "AFTER_START_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                }
+            ]
+        },
+        {
+            "code": "MPHD PWI 3.2",
+            "id": "g2NKJHX99Nw",
+            "name": "MPHD PWI 3.2 - # of knowledge-sharing events relevant to MOMENTUM either hosted by MPHD or in which MPHD staff substantially participated (KM.1) [PSI]",
+            "shortName": "MPHD PWI 3.2 - # of knowledge-sharing events KM.1",
+            "aggregationType": "COUNT",
+            "expression": "V{event_count}",
+            "sharing": {
+                "owner": "yjRdqHnhju2",
+                "external": false,
+                "users": "",
+                "userGroups": "",
+                "public": "rw------"
+            },
+            "filter": "#{mbbO1673Qpa.jAo9SfwOldr} == \"VR\" || #{mbbO1673Qpa.jAo9SfwOldr} == \"IP\"",
+            "analyticsType": "EVENT",
+            "program": {"id": "WkT3P1D28LN"},
+            "analyticsPeriodBoundaries": [
+                {
+                    "lastUpdated": "2022-04-27T06:38:49.607",
+                    "id": "agCcdHx2w7M",
+                    "created": "2022-04-27T06:38:49.607",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "BEFORE_END_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                },
+                {
+                    "lastUpdated": "2022-04-27T06:38:49.607",
+                    "id": "c6ONkKJy6Tz",
+                    "created": "2022-04-27T06:38:49.607",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "AFTER_START_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                }
+            ]
+        },
+        {
+            "code": "MPHD PWI 3.9 - DIG.1",
+            "id": "ZKjjOycnu5o",
+            "name": "MPHD PWI 3.9 - # of activities that include a component in which digital health solutions are developed or strengthened by MPHD (DIG.1) [PSI]",
+            "shortName": "MPHD PWI 3.9 - DIG.1",
+            "aggregationType": "COUNT",
+            "expression": "V{event_count}",
+            "sharing": {
+                "owner": "yjRdqHnhju2",
+                "external": false,
+                "users": "",
+                "userGroups": "",
+                "public": "rw------"
+            },
+            "filter": "#{TRpnm9WHL7h.SKEUDJUzxHq} == \"PWI 3.9\"",
+            "analyticsType": "EVENT",
+            "program": {"id": "pZc9MOvkueP"},
+            "analyticsPeriodBoundaries": [
+                {
+                    "lastUpdated": "2022-04-27T06:48:59.470",
+                    "id": "BrUx4KH8N7Z",
+                    "created": "2022-04-27T06:47:37.338",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "BEFORE_END_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                },
+                {
+                    "lastUpdated": "2022-04-27T06:48:59.470",
+                    "id": "kcvJaVrA90G",
+                    "created": "2022-04-27T06:47:37.338",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "AFTER_START_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                }
+            ]
+        },
+        {
+            "code": "MPHD PWI 4.1 NEW",
+            "id": "tnp0yXhHTmb",
+            "name": "MPHD PWI 4.1 - # of partnerships supported, facilitated, or catalyzed by MPHD (PSE/MSP.1) [PSI]",
+            "shortName": "MPHD PWI 4.1 - # of partnerships (PSE/MSP.1) [PSI]",
+            "aggregationType": "COUNT",
+            "expression": "V{event_count}",
+            "sharing": {
+                "owner": "yjRdqHnhju2",
+                "external": false,
+                "users": "",
+                "userGroups": "",
+                "public": "rw------"
+            },
+            "filter": "#{TRpnm9WHL7h.SKEUDJUzxHq} == \"PWI 4.1\"",
+            "analyticsType": "EVENT",
+            "program": {"id": "pZc9MOvkueP"},
+            "analyticsPeriodBoundaries": [
+                {
+                    "lastUpdated": "2022-04-27T17:21:57.026",
+                    "id": "knOFWBFzKq6",
+                    "created": "2022-04-27T06:50:23.352",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "BEFORE_END_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                },
+                {
+                    "lastUpdated": "2022-04-27T17:21:57.026",
+                    "id": "CuW0CJnNSjS",
+                    "created": "2022-04-27T06:50:23.352",
+                    "externalAccess": false,
+                    "analyticsPeriodBoundaryType": "AFTER_START_OF_REPORTING_PERIOD",
+                    "boundaryTarget": "EVENT_DATE",
+                    "sharing": {
+                        "external": false,
+                        "users": "",
+                        "userGroups": ""
+                    },
+                    "favorite": false,
+                    "access": {
+                        "read": true,
+                        "update": true,
+                        "externalize": true,
+                        "delete": true,
+                        "write": true,
+                        "manage": true
+                    },
+                    "favorites": [],
+                    "translations": [],
+                    "userGroupAccesses": [],
+                    "attributeValues": [],
+                    "userAccesses": []
+                }
+            ]
+        }
+    ]
+}
